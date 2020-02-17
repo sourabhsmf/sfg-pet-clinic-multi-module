@@ -10,8 +10,12 @@ public class Person extends BaseEntity {
     public String lastName;
 
     public Person(String firstName, String lastName) {
+        super();
         this.firstName = firstName;
         this.lastName = lastName;
+    }
+    public Person(){
+        
     }
     public void setFirstName(String firstName){
         this.firstName = firstName;

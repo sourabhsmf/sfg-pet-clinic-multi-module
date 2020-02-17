@@ -4,8 +4,11 @@ package guru.springframework.sfgpetclinic.model;
 /**
  * 
  */
-public class BaseEntity extends BaseEntity {
+public class BaseEntity{
     public Long Id;
+    public BaseEntity(){
+        this.Id = 0L;
+    }
     public BaseEntity(Long Id){
         this.Id = Id;
     }

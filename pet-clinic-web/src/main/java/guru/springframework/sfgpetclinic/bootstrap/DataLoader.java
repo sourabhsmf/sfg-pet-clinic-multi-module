@@ -1,4 +1,4 @@
-package guru.springframework.bootstrap;
+package guru.springframework.sfgpetclinic.bootstrap;
 
 import java.sql.Date;
 
@@ -9,8 +9,6 @@ import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.Vet;
 import guru.springframework.sfgpetclinic.services.OwnerService;
 import guru.springframework.sfgpetclinic.services.VetService;
-import guru.springframework.sfgpetclinic.services.map.OwnerServiceMap;
-import guru.springframework.sfgpetclinic.services.map.VetServiceMap;
 
 @Component
 public class DataLoader implements CommandLineRunner{
@@ -18,9 +16,9 @@ public class DataLoader implements CommandLineRunner{
     private final OwnerService ownerService;
     private final VetService vetService;
 
-    public DataLoader(){
-        this.ownerService = new OwnerServiceMap();
-        this.vetService = new VetServiceMap();
+    public DataLoader(OwnerService ownerService,VetService vetService){
+        this.ownerService = ownerService;
+        this.vetService = vetService;
     }
 
     @Override
@@ -41,14 +39,14 @@ public class DataLoader implements CommandLineRunner{
 
         System.out.println("Owners have been loaded succcessfully");
 
-        Vet vet1 = new Vet(new Date(10));
+        Vet vet1 = new Vet(new Date(10,0,0));
         vet1.setId(2L);
         vet1.setFirstName("Wizard");
         vet1.setLastName("White");
         
         vetService.save(vet1);
 
-        Vet vet2 = new Vet(new Date(20));
+        Vet vet2 = new Vet(new Date(20,0,0));
         vet2.setId(3L);
         vet2.setFirstName("Ogre");
         vet2.setLastName("Old");
@@ -56,7 +54,7 @@ public class DataLoader implements CommandLineRunner{
         vetService.save(vet2);
 
         System.out.println("Vets have been loaded succcessfully");
-
+        
     }
 
 }

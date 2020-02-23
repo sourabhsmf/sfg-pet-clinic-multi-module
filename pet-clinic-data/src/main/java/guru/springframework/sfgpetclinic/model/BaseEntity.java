@@ -5,7 +5,7 @@ package guru.springframework.sfgpetclinic.model;
  * 
  */
 public class BaseEntity{
-    public Long Id;
+    private Long Id;
     public BaseEntity(){
         this.Id = 0L;
     }

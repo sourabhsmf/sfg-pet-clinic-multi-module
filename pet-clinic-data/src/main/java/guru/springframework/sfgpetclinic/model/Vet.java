@@ -8,8 +8,8 @@ import java.util.Set;
  */
 public class Vet extends Person {
 
-    public Date yearsOfPractice;
-    public Set<Speciality> specialities; 
+    private Date yearsOfPractice;
+    private Set<Speciality> specialities; 
     public Vet(Date yearsOfPractice) {
         this.yearsOfPractice = yearsOfPractice;
     }

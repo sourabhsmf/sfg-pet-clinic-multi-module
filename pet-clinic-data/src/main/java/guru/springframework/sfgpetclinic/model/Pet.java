@@ -6,8 +6,8 @@ package guru.springframework.sfgpetclinic.model;
  */
 public class Pet extends BaseEntity{
 
-    public String petName;
-    public String disease;
+    private String petName;
+    private String disease;
     public Pet(String petName, String disease) {
         super();
         this.petName = petName;

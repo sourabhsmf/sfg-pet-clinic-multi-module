@@ -7,8 +7,8 @@ import java.util.Set;
  */
 public class Owner extends Person {
 
-    public Integer age;
-    public Set<Pet> pets;
+    private Integer age;
+    private Set<Pet> pets;
     
     public Owner(Integer age) {
         this.age = age;

@@ -3,9 +3,9 @@ package guru.springframework.sfgpetclinic.model;
 import java.sql.Date;
 
 public class Visit extends BaseEntity {
-    public Date date;
-    public String description;
-    public Pet pet;
+    private Date date;
+    private String description;
+    private Pet pet;
 
     public void setDate(Date date){
         this.date = date;

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmln:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'owners')}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +7,13 @@
 </head>
 <body>
     <h1 th:text="'List of Owners'">This is the Owners's Index Page</h1>
-    <table>
+    <table class="table table-striped">
         <thead>
             <tr>
-                <td>ID</td>
-                <td>First Name</td>
-                <td>Last Name</td>
-                <td>Age</td>
+                <th style="width: 150px">ID</th>
+                <th style="width: 150px">First Name</th>
+                <th style="width: 150px">Last Name</th>
+                <th style="width: 150px">Age</th>
             </tr>
         </thead>
         <tbody>

@@ -37,7 +37,10 @@ public class DataLoader implements CommandLineRunner{
 
     @Override
     public void run(String... args) throws Exception{
-        
+        if(petTypeService.findAll().size() == 0) { loadData(); }
+    }
+    
+    public void loadData(){    
         //Pet type
         PetType dragon = new PetType("Dragon");
         PetType savedDragonPetType = petTypeService.save(dragon);

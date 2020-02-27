@@ -14,6 +14,7 @@
                 <td style="width: 150px">First Name</td>
                 <td style="width: 150px">Last Name</td>
                 <td style="width: 150px">Years Of Practice</td>
+                <td style="width: 150px">Speciality</td>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,9 @@
                 <td th:text="${vet.firstName}">Some</td>
                 <td th:text="${vet.lastName}">One</td>
                 <td th:text="${vet.yearsOfPractice}"><1/td>
+                <td th:each="sepciality : ${vet.specialities}">
+                    <p th:text="${sepciality.description}">One</p>
+                </td>
             </tr>
         </tbody>
     </table>

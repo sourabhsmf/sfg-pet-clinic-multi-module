@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.Pet;
 import guru.springframework.sfgpetclinic.model.PetType;
+import guru.springframework.sfgpetclinic.model.Speciality;
 import guru.springframework.sfgpetclinic.model.Vet;
 import guru.springframework.sfgpetclinic.services.OwnerService;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
@@ -75,13 +76,22 @@ public class DataLoader implements CommandLineRunner{
         Vet vet1 = new Vet(new Date(10L));
         vet1.setFirstName("Wizard");
         vet1.setLastName("White");
+
+        //speciality object
+        Speciality elixirSpeciality = new Speciality();
+        elixirSpeciality.setDescription("Healing Potions");
         
+        Speciality enchantedSpeciality = new Speciality();
+        enchantedSpeciality.setDescription("Enchanted Potions");
+        
+        vet1.getSpecialities().add(elixirSpeciality);
         vetService.save(vet1);
 
         Vet vet2 = new Vet(new Date(20L));
         vet2.setFirstName("Ogre");
         vet2.setLastName("Old");
         
+        vet2.getSpecialities().add(enchantedSpeciality);
         vetService.save(vet2);
 
         System.out.println("Vets have been loaded succcessfully");

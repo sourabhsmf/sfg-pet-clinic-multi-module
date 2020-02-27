@@ -10,20 +10,29 @@ import guru.springframework.sfgpetclinic.model.Pet;
 import guru.springframework.sfgpetclinic.model.PetType;
 import guru.springframework.sfgpetclinic.model.Speciality;
 import guru.springframework.sfgpetclinic.model.Vet;
+import guru.springframework.sfgpetclinic.model.Visit;
 import guru.springframework.sfgpetclinic.services.OwnerService;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
 import guru.springframework.sfgpetclinic.services.VetService;
-
+import guru.springframework.sfgpetclinic.services.VisitService;
+import guru.springframework.sfgpetclinic.services.SpecialityService;
 @Component
 public class DataLoader implements CommandLineRunner{
 
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
-    public DataLoader(OwnerService ownerService,VetService vetService,PetTypeService petTypeService){
+    private final SpecialityService specialityService;
+    private final VisitService visitService;
+
+    public DataLoader(OwnerService ownerService,VetService vetService,
+                    PetTypeService petTypeService, SpecialityService specialityService,
+                    VisitService visitService){
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialityService = specialityService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -50,6 +59,15 @@ public class DataLoader implements CommandLineRunner{
         warlockPet.setOwner(owner1);
         warlockPet.setDob(new Date(100L));
 
+        
+        Visit warlockPetVisit = new Visit();
+        warlockPetVisit.setDate(new Date(100L));
+        warlockPetVisit.setDescription("Violations");
+        warlockPetVisit.setPet(warlockPet);
+
+        visitService.save(warlockPetVisit);
+        warlockPet.getVisits().add(warlockPetVisit);
+
         owner1.getPets().add(warlockPet);
 
         ownerService.save(owner1);
@@ -71,6 +89,14 @@ public class DataLoader implements CommandLineRunner{
 
         ownerService.save(owner2);
 
+        Visit elfPetVisit = new Visit();
+        elfPetVisit.setDate(new Date(100L));
+        elfPetVisit.setDescription("Violations");
+        elfPetVisit.setPet(elfPet);
+
+        visitService.save(elfPetVisit);
+        elfPet.getVisits().add(elfPetVisit);
+
         System.out.println("Owners have been loaded succcessfully");
 
         Vet vet1 = new Vet(new Date(10L));
@@ -80,10 +106,12 @@ public class DataLoader implements CommandLineRunner{
         //speciality object
         Speciality elixirSpeciality = new Speciality();
         elixirSpeciality.setDescription("Healing Potions");
+        specialityService.save(elixirSpeciality);
         
         Speciality enchantedSpeciality = new Speciality();
         enchantedSpeciality.setDescription("Enchanted Potions");
-        
+        specialityService.save(enchantedSpeciality);
+
         vet1.getSpecialities().add(elixirSpeciality);
         vetService.save(vet1);
 

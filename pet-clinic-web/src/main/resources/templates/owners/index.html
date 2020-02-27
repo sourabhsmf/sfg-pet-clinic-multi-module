@@ -14,6 +14,7 @@
                 <th style="width: 150px">First Name</th>
                 <th style="width: 150px">Last Name</th>
                 <th style="width: 150px">Age</th>
+                <th style="width: 150px">Pets</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +23,12 @@
                 <td th:text="${owner.firstName}">Some</td>
                 <td th:text="${owner.lastName}">One</td>
                 <td th:text="${owner.age}">1</td>
+                <td th:each="pet : ${owner.pets}">
+                    <p th:text="${pet.petName}">Pet Name </p>  
+                    <p th:each="visit : ${pet.visits}">
+                        <a>Visited on => </a><a th:text="${visit.date}">01-01-1900</a>
+                    </p>
+                </td>
             </tr>
         </tbody>
     </table>

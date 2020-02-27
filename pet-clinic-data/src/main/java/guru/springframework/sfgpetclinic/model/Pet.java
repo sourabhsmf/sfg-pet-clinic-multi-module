@@ -1,6 +1,8 @@
 package guru.springframework.sfgpetclinic.model;
 
 import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -12,11 +14,20 @@ public class Pet extends BaseEntity {
     private PetType petType;
     private String petName;
     private String disease;
+    private Set<Visit> visits = new HashSet<>();
 
     public Pet(String petName, String disease) {
         super();
         this.petName = petName;
         this.disease = disease;
+    }
+
+    public Set<Visit> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(Set<Visit> visits) {
+        this.visits = visits;
     }
 
     public Date getDob() {

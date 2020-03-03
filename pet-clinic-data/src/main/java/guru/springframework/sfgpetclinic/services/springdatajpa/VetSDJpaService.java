@@ -22,26 +22,22 @@ public class VetSDJpaService implements VetService {
 
     @Override
     public Vet findById(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        return vetRepository.findById(id).orElse(null);
     }
 
     @Override
-    public Vet save(Vet object) {
-        // TODO Auto-generated method stub
-        return null;
+    public Vet save(Vet vet) {
+        return vetRepository.save(vet);
     }
 
     @Override
-    public void delete(Vet object) {
-        // TODO Auto-generated method stub
-
+    public void delete(Vet vet) {
+        vetRepository.delete(vet);
     }
 
     @Override
     public void deleteById(Long id) {
-        // TODO Auto-generated method stub
-
+        vetRepository.deleteById(id);
     }
 
 }

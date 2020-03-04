@@ -43,13 +43,16 @@ public class DataLoader implements CommandLineRunner{
     public void loadData(){    
         //Pet type
         PetType dragon = new PetType("Dragon");
+        // dragon.setName("Dragon");
         PetType savedDragonPetType = petTypeService.save(dragon);
         
         PetType gobblin = new PetType("Gobblin");
+        // gobblin.setName("Gobblin");
         PetType savedGobblinPetType = petTypeService.save(gobblin);
         
         //Owners
-        Owner owner1 = new Owner(21);
+        Owner owner1 = new Owner();
+        owner1.setAge(21);
         owner1.setFirstName("Warlock");
         owner1.setLastName("Mortal");
         owner1.setAddress("1,Skylake");
@@ -57,7 +60,9 @@ public class DataLoader implements CommandLineRunner{
         owner1.setTelephone("1222111111");
 
         //owner1 pet object
-        Pet warlockPet = new Pet("Dragon" , "Fire Breath");
+        Pet warlockPet = new Pet();
+        warlockPet.setPetName("Dragon");
+        warlockPet.setDisease("Fire Breath");
         warlockPet.setPetType(savedDragonPetType);
         warlockPet.setOwner(owner1);
         warlockPet.setDob(new Date(100L));
@@ -75,7 +80,8 @@ public class DataLoader implements CommandLineRunner{
 
         ownerService.save(owner1);
 
-        Owner owner2 = new Owner(22);
+        Owner owner2 = new Owner();
+        owner2.setAge(22);
         owner2.setFirstName("Elf");
         owner2.setLastName("Immune");
         owner2.setAddress("15,Killian");
@@ -83,7 +89,9 @@ public class DataLoader implements CommandLineRunner{
         owner2.setTelephone("1222111111");
         
         //owner2 pet object
-        Pet elfPet = new Pet("Gobblin" , "Coin Finger");
+        Pet elfPet = new Pet();
+        elfPet.setPetName("Gobblin");
+        elfPet.setDisease("Coin Finger");
         elfPet.setPetType(savedGobblinPetType);
         elfPet.setOwner(owner2);
         elfPet.setDob(new Date(100L));
@@ -102,7 +110,8 @@ public class DataLoader implements CommandLineRunner{
 
         System.out.println("Owners have been loaded succcessfully");
 
-        Vet vet1 = new Vet(new Date(10L));
+        Vet vet1 = new Vet();
+        vet1.setYearsOfPractice(new Date(10L));
         vet1.setFirstName("Wizard");
         vet1.setLastName("White");
 
@@ -118,7 +127,8 @@ public class DataLoader implements CommandLineRunner{
         vet1.getSpecialities().add(elixirSpeciality);
         vetService.save(vet1);
 
-        Vet vet2 = new Vet(new Date(20L));
+        Vet vet2 = new Vet();
+        vet2.setYearsOfPractice(new Date(20L));
         vet2.setFirstName("Ogre");
         vet2.setLastName("Old");
         

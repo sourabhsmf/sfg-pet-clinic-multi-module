@@ -1,13 +1,21 @@
 package guru.springframework.sfgpetclinic.model;
 
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 
  */
+@Getter
+@Setter
+@AllArgsConstructor
 @MappedSuperclass
 public class BaseEntity{
     @Id
@@ -15,14 +23,5 @@ public class BaseEntity{
     private Long Id;
     public BaseEntity(){
         this.Id = 0L;
-    }
-    public BaseEntity(Long Id){
-        this.Id = Id;
-    }
-    public void setId(Long Id){
-        this.Id = Id;
-    }
-    public Long getId(){
-        return this.Id;
     }
 }

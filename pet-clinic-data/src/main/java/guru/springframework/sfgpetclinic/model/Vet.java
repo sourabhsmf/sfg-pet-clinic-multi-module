@@ -12,10 +12,18 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * 
  */
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "vets")
 public class Vet extends Person {
@@ -36,49 +44,5 @@ public class Vet extends Person {
     
     @Column(name = "city")
     private String city;
-
-    public Vet(Date yearsOfPractice) {
-        this.setYearsOfPractice(yearsOfPractice);
-    }
-
-    public Date getYearsOfPractice() {
-        return yearsOfPractice;
-    }
-
-    public void setYearsOfPractice(Date yearsOfPractice) {
-        this.yearsOfPractice = yearsOfPractice;
-    }
-
-    public Set<Speciality> getSpecialities() {
-        return specialities;
-    }
-
-    public void setSpecialities(Set<Speciality> specialities) {
-        this.specialities = specialities;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public void setTelephone(String telephone) {
-        this.telephone = telephone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
 }

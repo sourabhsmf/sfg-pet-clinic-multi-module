@@ -12,6 +12,7 @@ import guru.springframework.sfgpetclinic.model.Speciality;
 import guru.springframework.sfgpetclinic.model.Vet;
 import guru.springframework.sfgpetclinic.model.Visit;
 import guru.springframework.sfgpetclinic.services.OwnerService;
+import guru.springframework.sfgpetclinic.services.PetService;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
 import guru.springframework.sfgpetclinic.services.VetService;
 import guru.springframework.sfgpetclinic.services.VisitService;
@@ -24,15 +25,16 @@ public class DataLoader implements CommandLineRunner{
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
     private final VisitService visitService;
-
+    private final PetService petService;
     public DataLoader(OwnerService ownerService,VetService vetService,
                     PetTypeService petTypeService, SpecialityService specialityService,
-                    VisitService visitService){
+                    VisitService visitService, PetService petService){
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
         this.visitService = visitService;
+        this.petService = petService;
     }
 
     @Override
@@ -64,21 +66,22 @@ public class DataLoader implements CommandLineRunner{
         warlockPet.setPetName("Dragon");
         warlockPet.setDisease("Fire Breath");
         warlockPet.setPetType(savedDragonPetType);
-        warlockPet.setOwner(owner1);
         warlockPet.setDob(new Date(100L));
-
+        warlockPet.setOwner(owner1);
         
+        //Required for map based service impl
+        owner1.getPets().add(warlockPet);
+
+        //Get the persistent owner2 object
+        owner1 = ownerService.save(owner1);
+
         Visit warlockPetVisit = new Visit();
         warlockPetVisit.setDate(new Date(100L));
         warlockPetVisit.setDescription("Violations");
-        warlockPetVisit.setPet(warlockPet);
-
+        warlockPetVisit.setPet(owner1.getPets().iterator().next());
+        
         visitService.save(warlockPetVisit);
         warlockPet.getVisits().add(warlockPetVisit);
-
-        owner1.getPets().add(warlockPet);
-
-        ownerService.save(owner1);
 
         Owner owner2 = new Owner();
         owner2.setAge(22);
@@ -93,17 +96,19 @@ public class DataLoader implements CommandLineRunner{
         elfPet.setPetName("Gobblin");
         elfPet.setDisease("Coin Finger");
         elfPet.setPetType(savedGobblinPetType);
-        elfPet.setOwner(owner2);
         elfPet.setDob(new Date(100L));
+        elfPet.setOwner(owner2);
         
+        //Required for map based service impl
         owner2.getPets().add(elfPet);
-
-        ownerService.save(owner2);
+        //Get the persistent owner2 object
+        owner2 = ownerService.save(owner2);
+        
 
         Visit elfPetVisit = new Visit();
         elfPetVisit.setDate(new Date(100L));
         elfPetVisit.setDescription("Violations");
-        elfPetVisit.setPet(elfPet);
+        elfPetVisit.setPet(owner2.getPets().iterator().next());
 
         visitService.save(elfPetVisit);
         elfPet.getVisits().add(elfPetVisit);
@@ -118,11 +123,11 @@ public class DataLoader implements CommandLineRunner{
         //speciality object
         Speciality elixirSpeciality = new Speciality();
         elixirSpeciality.setDescription("Healing Potions");
-        specialityService.save(elixirSpeciality);
+        elixirSpeciality = specialityService.save(elixirSpeciality);
         
         Speciality enchantedSpeciality = new Speciality();
         enchantedSpeciality.setDescription("Enchanted Potions");
-        specialityService.save(enchantedSpeciality);
+        enchantedSpeciality = specialityService.save(enchantedSpeciality);
 
         vet1.getSpecialities().add(elixirSpeciality);
         vetService.save(vet1);

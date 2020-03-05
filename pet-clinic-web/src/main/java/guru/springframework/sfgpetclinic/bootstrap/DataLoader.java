@@ -12,7 +12,6 @@ import guru.springframework.sfgpetclinic.model.Speciality;
 import guru.springframework.sfgpetclinic.model.Vet;
 import guru.springframework.sfgpetclinic.model.Visit;
 import guru.springframework.sfgpetclinic.services.OwnerService;
-import guru.springframework.sfgpetclinic.services.PetService;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
 import guru.springframework.sfgpetclinic.services.VetService;
 import guru.springframework.sfgpetclinic.services.VisitService;
@@ -25,16 +24,14 @@ public class DataLoader implements CommandLineRunner{
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
     private final VisitService visitService;
-    private final PetService petService;
     public DataLoader(OwnerService ownerService,VetService vetService,
                     PetTypeService petTypeService, SpecialityService specialityService,
-                    VisitService visitService, PetService petService){
+                    VisitService visitService){
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
         this.visitService = visitService;
-        this.petService = petService;
     }
 
     @Override

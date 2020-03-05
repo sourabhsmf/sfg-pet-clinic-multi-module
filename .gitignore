@@ -26,3 +26,5 @@ target
 classes
 .settings
 .vscode
+.idea
+*.iml

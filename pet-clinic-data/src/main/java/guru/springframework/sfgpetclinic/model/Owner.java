@@ -9,10 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * 
@@ -20,10 +17,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "owners")
  public class Owner extends Person {
+
+   @Builder
+   public Owner(Long id, String firstName, String lastName, String address, String telephone, String city, Integer age, Set<Pet> pets) {
+      super(id, firstName, lastName);
+      this.address = address;
+      this.telephone = telephone;
+      this.city = city;
+      this.age = age;
+      this.pets = pets;
+   }
 
     @Column(name = "address")
     private String address;

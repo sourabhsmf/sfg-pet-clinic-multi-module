@@ -20,8 +20,6 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
 @Entity
 @Table(name = "pets")
 public class Pet extends BaseEntity {
@@ -45,5 +43,17 @@ public class Pet extends BaseEntity {
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "pet")
     private Set<Visit> visits = new HashSet<>();
+
+    @Builder
+    public Pet(Long Id, Date dob, Owner owner, PetType petType, String petName, String disease,
+                 Set<Visit> visits) {
+        super(Id);
+        this.dob = dob;
+        this.owner = owner;
+        this.petType = petType;
+        this.petName = petName;
+        this.disease = disease;
+        this.visits = visits;
+    }
 
 }

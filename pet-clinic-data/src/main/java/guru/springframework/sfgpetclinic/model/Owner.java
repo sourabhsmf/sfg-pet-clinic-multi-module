@@ -21,16 +21,6 @@ import lombok.*;
 @Table(name = "owners")
  public class Owner extends Person {
 
-   @Builder
-   public Owner(Long id, String firstName, String lastName, String address, String telephone, String city, Integer age, Set<Pet> pets) {
-      super(id, firstName, lastName);
-      this.address = address;
-      this.telephone = telephone;
-      this.city = city;
-      this.age = age;
-      this.pets = pets;
-   }
-
     @Column(name = "address")
     private String address;
     
@@ -45,5 +35,15 @@ import lombok.*;
     
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "owner")
     private Set<Pet> pets = new HashSet<>();
-
+   
+    @Builder
+    public Owner(Long id, String firstName, String lastName, String address, String telephone, String city, Integer age, Set<Pet> pets) {
+       super(id, firstName, lastName);
+       this.address = address;
+       this.telephone = telephone;
+       this.city = city;
+       this.age = age;
+       this.pets = pets;
+    }
+ 
 }

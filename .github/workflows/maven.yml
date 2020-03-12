@@ -22,7 +22,7 @@ jobs:
         java-version: 1.8
     - name: Install required dependencies
       run: mvn install -DskipTests 
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
     - name: Run tests
       run: mvn test
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml

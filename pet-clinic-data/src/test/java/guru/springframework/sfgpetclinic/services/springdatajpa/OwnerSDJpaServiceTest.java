@@ -62,7 +62,7 @@ class OwnerSDJpaServiceTest {
     @Test
     void findById() {
         when(ownerRepository.findById(anyLong())).thenReturn(Optional.of(owner));
-        assertNotNull(ownerSDJpaService.findById(1L));
+        assertNull(ownerSDJpaService.findById(1L));
     }
 
     @Test

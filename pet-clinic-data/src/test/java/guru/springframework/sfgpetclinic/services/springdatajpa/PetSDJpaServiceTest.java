@@ -76,4 +76,27 @@ class PetSDJpaServiceTest {
         assertEquals(pet, savedPet);
         verify(petRepository).save(petToSave);
     }
+    @Test
+    void delete(){
+        //Given
+        //pet object to be deleted
+        
+        //When
+        petSDJpaService.delete(pet);
+
+        //Then
+        verify(petRepository).delete(pet);
+
+    }
+    @Test
+    void deleteById(){
+        //Given
+        //pet object to be deleted
+        
+        //When
+        petSDJpaService.deleteById(pet.getId());
+        
+        //Then
+        verify(petRepository).deleteById(pet.getId());
+    }
 }

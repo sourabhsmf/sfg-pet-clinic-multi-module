@@ -28,3 +28,6 @@ classes
 .vscode
 .idea
 *.iml
+.classpath
+.factorypath
+.project

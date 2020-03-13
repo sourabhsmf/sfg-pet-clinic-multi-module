@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.Pet;
 import guru.springframework.sfgpetclinic.repositories.PetRepository;
 
@@ -36,33 +35,45 @@ class PetSDJpaServiceTest {
 
     @Test
     void findAll(){
+        //When
         Set<Pet> petSet = new HashSet<>();
         petSet.add(Pet.builder().Id(2L).build());
         petSet.add(Pet.builder().Id(3L).build());
 
         when(petRepository.findAll()).thenReturn(petSet);
 
-        assertNotNull(petSet);
-        assertEquals(2, petSDJpaService.findAll().size());
+        //When
+        Set<Pet> pets = petSDJpaService.findAll();
 
-        verify(petRepository, times(1)).findAll();
+        //Then
+        assertNotNull(pets);
+        assertEquals(2, pets.size());
+        assertEquals(petSet, pets);
+        verify(petRepository).findAll();
     }
     @Test
     void findById(){
+        //Given
         when(petRepository.findById(anyLong())).thenReturn(Optional.of(pet));
 
-        assertEquals(pet, petSDJpaService.findById(pet.getId()));
-
-        verify(petRepository).findById(anyLong());
+        //When
+        Pet returnedPet = petSDJpaService.findById(pet.getId());
+        
+        //Then
+        assertEquals(pet, returnedPet);
+        verify(petRepository).findById(pet.getId());
     }
     @Test
     void save(){
-        when(petRepository.save(any())).thenReturn(any(Pet.class));
+        //Given
+        Pet petToSave = Pet.builder().Id(1L).build();
+        when(petRepository.save(petToSave)).thenReturn(pet);
 
-        pet.setOwner(Owner.builder().id(1L).build());
-
-        assertEquals(pet, petSDJpaService.save(pet));
-
-        verify(petRepository).save(any());
+        //When
+        Pet savedPet = petSDJpaService.save(petToSave);
+        
+        //Then
+        assertEquals(pet, savedPet);
+        verify(petRepository).save(petToSave);
     }
 }

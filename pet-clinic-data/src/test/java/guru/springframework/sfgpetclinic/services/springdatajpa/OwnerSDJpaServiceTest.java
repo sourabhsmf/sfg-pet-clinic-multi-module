@@ -39,47 +39,84 @@ class OwnerSDJpaServiceTest {
 
     @Test
     void findAll() {
+        //Given
         Set<Owner> ownerSet = new HashSet<>();
         ownerSet.add(Owner.builder().id(2L).build());
         ownerSet.add(Owner.builder().id(3L).build());
 
         when(ownerRepository.findAll()).thenReturn(ownerSet);
 
+        //When
         Set<Owner> owners = ownerSDJpaService.findAll();
 
+        //Then
         assertNotNull(owners);
         assertEquals(2, owners.size());
+        assertEquals(ownerSet, owners);
+        
     }
 
     @Test
     void findById() {
+        //Given
         when(ownerRepository.findById(anyLong())).thenReturn(Optional.of(owner));
-        assertNotNull(ownerSDJpaService.findById(1L));
+        
+        //When
+        Owner returnedOwner = ownerSDJpaService.findById(1L);
+
+        //Then
+        assertNotNull(returnedOwner);
+        assertEquals(owner, returnedOwner);
     }
 
     @Test
     void save() {
-        when(ownerRepository.save(any())).thenReturn(owner);
-        assertNotNull(ownerSDJpaService.save(Owner.builder().id(4L).build()));
-        verify(ownerRepository).save(any());
+        //Given
+        Owner ownerToSave = Owner.builder().id(1L).build();
+        when(ownerRepository.save(ownerToSave)).thenReturn(owner);
+
+        //When
+        Owner savedOwner = ownerSDJpaService.save(ownerToSave);
+        
+        //Then
+        assertEquals(owner, savedOwner);
+        verify(ownerRepository).save(ownerToSave);
     }
 
     @Test
     void delete() {
+        //Given
+        //owner object to be deleted
+
+        //When
         ownerSDJpaService.delete(owner);
-        verify(ownerRepository, times(1)).delete(any());
+        
+        //Then
+        verify(ownerRepository, times(1)).delete(owner);
     }
 
     @Test
     void deleteById() {
+        //Given
+        //owner object to be deleted
+
+        //When
         ownerSDJpaService.deleteById(owner.getId());
-        verify(ownerRepository, times(1)).deleteById(anyLong());
+        
+        //Then
+        verify(ownerRepository, times(1)).deleteById(owner.getId());
     }
 
     @Test
     void findByLastName() {
+        //Given
         when(ownerRepository.findByLastName(anyString())).thenReturn(owner);
-        assertEquals(LAST_NAME, ownerSDJpaService.findByLastName(LAST_NAME).getLastName());
-        verify(ownerRepository, times(1)).findByLastName(anyString());
+        
+        //When
+        Owner returnedOwner = ownerSDJpaService.findByLastName(LAST_NAME);
+        
+        //Then
+        assertEquals(LAST_NAME, returnedOwner.getLastName());
+        verify(ownerRepository, times(1)).findByLastName(LAST_NAME);
     }
 }

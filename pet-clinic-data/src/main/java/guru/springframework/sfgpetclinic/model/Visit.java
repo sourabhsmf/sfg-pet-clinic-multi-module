@@ -13,9 +13,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Builder
 @Table(name = "visits")
 public class Visit extends BaseEntity {
     @Column(name = "date")
@@ -28,4 +26,11 @@ public class Visit extends BaseEntity {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
+    @Builder
+    public Visit(Long Id, Date date, String description, Pet pet) {
+        super(Id);
+        this.date = date;
+        this.description = description;
+        this.pet = pet;
+    }
 }

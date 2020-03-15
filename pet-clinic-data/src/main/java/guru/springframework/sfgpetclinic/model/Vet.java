@@ -20,9 +20,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Builder
 @Table(name = "vets")
 public class Vet extends Person {
 
@@ -43,4 +41,14 @@ public class Vet extends Person {
     @Column(name = "city")
     private String city;
 
+    @Builder
+    public Vet(Long Id, String firstName, String lastName, Date yearsOfPractice, Set<Speciality> specialities,
+               String address, String telephone, String city) {
+        super(Id, firstName, lastName);
+        this.yearsOfPractice = yearsOfPractice;
+        this.specialities = specialities;
+        this.address = address;
+        this.telephone = telephone;
+        this.city = city;
+    }
 }

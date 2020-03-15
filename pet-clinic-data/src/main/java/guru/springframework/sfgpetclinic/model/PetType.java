@@ -12,13 +12,16 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
-@Builder
 @Table(name = "pet_type")
 public class PetType extends BaseEntity {
 
     @Column(name = "name")
     private String name;
-    
+
+    @Builder
+    public PetType(Long Id, String name) {
+        super(Id);
+        this.name = name;
+    }
 }

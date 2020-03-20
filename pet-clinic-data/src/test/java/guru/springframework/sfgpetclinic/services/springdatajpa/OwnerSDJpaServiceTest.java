@@ -11,7 +11,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.ArgumentMatchers.anyLong;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -109,13 +111,17 @@ class OwnerSDJpaServiceTest {
     @Test
     void findByLastName() {
         //Given
-        when(ownerRepository.findByLastName(anyString())).thenReturn(owner);
+        List<Owner> owners = new ArrayList<>();
+        owners.add(Owner.builder().id(1L).lastName(LAST_NAME).build());
+        owners.add(Owner.builder().id(2L).lastName(LAST_NAME).build());
+
+        when(ownerRepository.findAllByLastNameLike(anyString())).thenReturn(owners);
         
         //When
-        Owner returnedOwner = ownerSDJpaService.findByLastName(LAST_NAME);
+        List<Owner> returnedOwners = ownerSDJpaService.findAllByLastNameLike(LAST_NAME);
         
         //Then
-        assertEquals(LAST_NAME, returnedOwner.getLastName());
-        verify(ownerRepository, times(1)).findByLastName(LAST_NAME);
+        assertEquals(owners.size(), returnedOwners.size());
+        verify(ownerRepository, times(1)).findAllByLastNameLike(LAST_NAME);
     }
 }

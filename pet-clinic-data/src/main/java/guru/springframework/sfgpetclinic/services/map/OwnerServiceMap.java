@@ -1,5 +1,7 @@
 package guru.springframework.sfgpetclinic.services.map;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.context.annotation.Profile;
@@ -31,13 +33,14 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
         return super.findById(id);
     }
     @Override
-    public Owner findByLastName(String lastName) {
+    public List<Owner> findAllByLastNameLike(String lastName) {
+        List<Owner> owners = new ArrayList<>();
         for(Owner owner : map.values()){
             if(owner.getLastName() == lastName){
-                return owner;
+                owners.add(owner);
             }
         }
-        return map.get(0L);
+        return owners;
     }
     @Override
     public void deleteById(Long id) {

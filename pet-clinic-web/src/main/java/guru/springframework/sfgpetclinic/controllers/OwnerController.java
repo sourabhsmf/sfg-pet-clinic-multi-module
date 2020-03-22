@@ -18,6 +18,10 @@ import guru.springframework.sfgpetclinic.services.OwnerService;
 @Controller
 public class OwnerController{
     
+    /**
+     *
+     */
+    private static final String OWNERS_CREATE_OR_UPDATE_OWNER_FORM = "/owners/createOrUpdateOwnerForm";
     private final OwnerService ownerService;
 
     public OwnerController(OwnerService ownerService){
@@ -38,7 +42,7 @@ public class OwnerController{
     }
 
     @GetMapping({"/findByLastName"})
-    public String findOwnersByLastName(Owner owner, BindingResult result, Model model){
+    public String findAllByLastNameLike(Owner owner, BindingResult result, Model model){
         List<Owner> owners = ownerService.findAllByLastNameLike(owner.getLastName());
         if(owners.isEmpty()){
             result.rejectValue("lastName", "notFound", "not found");
@@ -56,13 +60,13 @@ public class OwnerController{
     @GetMapping({"/create", "/add" , "/new"})
     public String createOwnerForm(Model model){
         model.addAttribute("owner", Owner.builder().build());
-        return "owners/createOrUpdateOwnerForm";
+        return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
     }
 
     @PostMapping({"/create", "/add", "/new"})
     public String createOwner(Owner owner, BindingResult result){
         if(result.hasErrors()){
-            return "owners/createOrUpdateOwnerForm";
+            return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
         }
         Owner savedOwner = ownerService.save(owner);
         return "redirect:/owners/" + savedOwner.getId();
@@ -88,15 +92,15 @@ public class OwnerController{
         }else{
             model.addAttribute("owner", Owner.builder().build());
         }
-        return "owners/createOrUpdateOwnerForm";
+        return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
     }
 
     @PostMapping({"/{ownerId}/edit"})
     public String updateOwner(@PathVariable Long ownerId, Owner owner, 
                                 BindingResult result, Model model){
-        if(result.hasErrors()){
+        if(result.hasErrors() || ownerService.findById(ownerId) == null){
             model.addAttribute("owner", owner);
-            return "owners/createOrUpdateOwnerForm";
+            return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
         }else{
             owner.setId(ownerId);
             Owner updatedOwner = ownerService.save(owner);

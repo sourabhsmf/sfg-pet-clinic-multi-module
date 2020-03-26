@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.services.OwnerService;
 
+import javax.validation.Valid;
+
 
 @RequestMapping({"/owners" , "owners.html"})
 @Controller
@@ -64,7 +66,7 @@ public class OwnerController{
     }
 
     @PostMapping({"/create", "/add", "/new"})
-    public String createOwner(Owner owner, BindingResult result){
+    public String createOwner(@Valid Owner owner, BindingResult result){
         if(result.hasErrors()){
             return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
         }
@@ -96,7 +98,7 @@ public class OwnerController{
     }
 
     @PostMapping({"/{ownerId}/edit"})
-    public String updateOwner(@PathVariable Long ownerId, Owner owner, 
+    public String updateOwner(@PathVariable Long ownerId, @Valid Owner owner,
                                 BindingResult result, Model model){
         if(result.hasErrors() || ownerService.findById(ownerId) == null){
             model.addAttribute("owner", owner);

@@ -10,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -129,10 +128,12 @@ class OwnerControllerTest {
         when(ownerService.save(isA(Owner.class))).thenReturn(ownerToSave);
 
         //When
-        MockHttpServletRequestBuilder req = post("/owners/create")
-                    .content("lastName="+ownerToSave.getLastName())
-                    .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE);  
-        mockMvc.perform(req)
+        mockMvc.perform(post("/owners/add")
+                            .content("firstName=Sourabh"
+                                    + "&lastName=" + ownerToSave.getLastName()
+                                    + "&address=123,Kiilian"
+                                    + "&city=SOLAR")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
                 .andExpect(status().is3xxRedirection())//Then
                 .andExpect(view().name("redirect:/owners/"+ownerToSave.getId()))
                 .andExpect(model().attributeExists("owner"));
@@ -200,11 +201,16 @@ class OwnerControllerTest {
         
         //When 
         mockMvc.perform(post("/owners/" + savedOwner.getId() + "/edit")
-                                .content("lastName="+LAST_NAME)
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
-                        .andExpect(status().is3xxRedirection()) //Then
-                        .andExpect(view().name("redirect:/owners/" + updatedOwner.getId()))
-                        .andExpect(model().attributeExists("owner"));
+                                .content("firstName=Sourabh"
+                                        + "&lastName=" + updatedOwner.getLastName()
+                                        + "&address=123,Kiilian###"
+                                        + "&age=44"
+                                        + "&telephone=1122334455"
+                                        + "&city=SOLAR")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
+                .andExpect(status().is3xxRedirection()) //Then
+                .andExpect(view().name("redirect:/owners/" + updatedOwner.getId()))
+                .andExpect(model().attributeExists("owner"));
         
         verify(ownerService).findById(owner.getId());
         verify(ownerService, times(2)).save(isA(Owner.class));
@@ -231,12 +237,15 @@ class OwnerControllerTest {
         
         //When 
         mockMvc.perform(post("/owners/100/edit")
-                                .content("lastName="+LAST_NAME)
-                                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
-                        .andExpect(status().isOk()) //Then
-                        .andExpect(view().name("/owners/createOrUpdateOwnerForm"))
-                        .andExpect(model().attributeExists("owner"));
-        
+                                    .content("firstName=Sourabh"
+                                            + "&lastName=" + LAST_NAME
+                                            + "&address=123,Kiilian"
+                                            + "&city=SOLAR")
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
+                .andExpect(status().isOk()) //Then
+                .andExpect(view().name("/owners/createOrUpdateOwnerForm"))
+                .andExpect(model().attributeExists("owner"));
+
         verify(ownerService).findById(anyLong());
         verify(ownerService, times(1)).save(isA(Owner.class));    
     }    

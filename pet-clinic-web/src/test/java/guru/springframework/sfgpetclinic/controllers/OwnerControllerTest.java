@@ -132,6 +132,8 @@ class OwnerControllerTest {
                             .content("firstName=Sourabh"
                                     + "&lastName=" + ownerToSave.getLastName()
                                     + "&address=123,Kiilian"
+                                    + "&age=44"
+                                    + "&telephone=1122334455"
                                     + "&city=SOLAR")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
                 .andExpect(status().is3xxRedirection())//Then
@@ -203,7 +205,7 @@ class OwnerControllerTest {
         mockMvc.perform(post("/owners/" + savedOwner.getId() + "/edit")
                                 .content("firstName=Sourabh"
                                         + "&lastName=" + updatedOwner.getLastName()
-                                        + "&address=123,Kiilian###"
+                                        + "&address=123,Kiilian"
                                         + "&age=44"
                                         + "&telephone=1122334455"
                                         + "&city=SOLAR")
@@ -240,6 +242,8 @@ class OwnerControllerTest {
                                     .content("firstName=Sourabh"
                                             + "&lastName=" + LAST_NAME
                                             + "&address=123,Kiilian"
+                                            + "&age=44"
+                                            + "&telephone=1122334455"
                                             + "&city=SOLAR")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
                 .andExpect(status().isOk()) //Then

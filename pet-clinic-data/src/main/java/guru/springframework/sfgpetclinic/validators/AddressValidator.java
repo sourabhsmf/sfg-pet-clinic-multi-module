@@ -14,10 +14,6 @@ public class AddressValidator implements ConstraintValidator<AddressConstraint, 
     public boolean isValid(String address, ConstraintValidatorContext constraintValidatorContext) {
         String whitelistedCharacters = ",-./\\\n\t";
 
-        //TODO-Remove and replace with @NotNull
-        if(address == null || address.length()==0){
-            return false;
-        }
         for(Character letter : address.toCharArray()){
             if(!Character.isAlphabetic((int)letter) && !Character.isDigit((int)letter)
                && whitelistedCharacters.indexOf(letter.toString()) < 0){

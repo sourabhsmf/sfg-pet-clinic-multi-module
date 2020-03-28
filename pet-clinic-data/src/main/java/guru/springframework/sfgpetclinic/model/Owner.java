@@ -29,6 +29,7 @@ import org.hibernate.validator.constraints.Length;
 
     @Column(name = "address")
     @AddressConstraint
+    @NotBlank
     private String address;
     
     @Column(name = "telephone")

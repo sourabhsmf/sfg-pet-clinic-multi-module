@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{fragments/layout :: layout (~{::body},'pet')}">
+
+  <body>
+  
+  
+    <h2>Pet Information</h2>
+  
+  
+    <table class="table table-striped" th:object="${pet}">
+      <tr>
+        <th>Name</th>
+        <td><b th:text="*{petName}"></b></td>
+      </tr>
+      <tr>
+        <th>Date Of Birth</th>
+        <td th:text="*{dob}" /></td>
+      </tr>
+      <tr>
+        <th>Suffering From Disease</th>
+        <td th:text="*{disease}" /></td>
+      </tr>
+      <tr>
+        <th>Type</th>
+        <td th:text="*{petType.name}" /></td>
+      </tr>
+    </table>
+  
+    <a
+      th:href="@{/owners/{ownerId}/pets/{petId}/edit(ownerId=${pet.owner.id},petId=${pet.Id})}" class="btn btn-default">
+      Edit Pet</a>
+    
+    <a th:href="@{/owners/{ownerId}/pets/new(ownerId=${ownerId})}" class="btn btn-default">Add
+      New Pet</a>
+  
+    <br />
+    <br />
+    <br />
+    <h2>Visits</h2>
+  
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Visit Date</th>
+          <th>Description</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tr th:each="visit : ${pet.visits}">
+        <td th:text="${visit.date}"></td>
+        <td th:text="${visit?.description}"></td>
+        <td><a class="btn btn-default"
+          th:href="@{{petId}/visits/new(petId=${pet.Id})}">
+          Add Visit
+        </a>
+          </td>
+      </tr>
+    </table>
+  
+  </body>
+
+</html>

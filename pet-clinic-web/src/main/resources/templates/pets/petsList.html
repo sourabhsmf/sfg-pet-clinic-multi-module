@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'owner')}">
+
+  <body>
+    <style>
+        .hidden{
+            display:none;
+            visibility:hidden';
+        }
+    </style>
+
+    <h2 th:text="|Pets of ${owner.firstName}|">Pets of dummy owner</h2>
+
+    <table id="vets" class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 150px;">Pet Name</th>
+            <th style="width: 200px;">Disease</th>
+            <th>DOB</th>
+            <th style="width: 200px;">Visits</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="pet : ${owner.pets}">
+                <td>
+                    <a th:href="@{/owners/__${owner.id}__/pets/__${pet.id}__}" 
+                    th:text="${pet.petName}"></a>
+                </td>
+                <td th:text="${pet.disease}"/>
+                <td th:text="${pet.dob}"/>
+                <td>
+                    <a href="#" onclick="show('left')">&lt;</a>
+                    <div th:each="visit,iterStat : ${pet.visits}" id="visits">
+                        <a th:href="@{/pets/__${pet.id}__/visits/__${visit.id}__}" 
+                            th:class="${iterStat.first} ? 'visible' : 'hidden'" 
+                            th:text="${visit.date}"/>
+                        </a>
+                    </div>
+                    <a href="#" onclick="show('right')">&gt;</a>
+                </td>  
+            </tr>
+        </tbody>
+        
+    </table>
+    <script>
+        var visits = document.getElementById("visits").children;
+        var activeVisit = document.getElementsByClassName("visible")[0];
+        function show(direction){
+            if(visits.length > 1){
+                activeVisit.className = "hidden";
+                activeVisit = direction === "right" ? 
+                                (activeVisit.nextElementSibling === null ? 
+                                    activeVisit : activeVisit.nextElementSibling) 
+                                : (activeVisit.previousElementSibling === null ? 
+                                    activeVisit : activeVisit.previousElementSibling) 
+                                ;
+                activeVisit.className = "visible"
+            }
+        }
+    </script>           
+    </body>
+</html>

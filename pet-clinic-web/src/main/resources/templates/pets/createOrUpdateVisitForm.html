@@ -4,7 +4,7 @@
 <body>
 
   <h2>
-    <th:block th:if="${visit['new']}">New </th:block>
+    <th:block th:if="${visit.id == null}">New </th:block>
     Visit
   </h2>
 
@@ -19,10 +19,10 @@
       </tr>
     </thead>
     <tr>
-      <td th:text="${pet.name}" /></td>
+      <td th:text="${pet.petName}" /></td>
       <td
-        th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}" /></td>
-      <td th:text="${pet.petType}" /></td>
+        th:text="${pet.dob}" /></td>
+      <td th:text="${pet.petType.name}" /></td>
       <td
         th:text="${pet.owner?.firstName + ' ' + pet.owner?.lastName}" /></td>
     </tr>
@@ -51,8 +51,8 @@
       <th>Date</th>
       <th>Description</th>
     </tr>
-    <tr th:if="${!visit['new']}" th:each="visit : ${pet.visits}">
-      <td th:text="${#temporals.format(visit.date, 'yyyy-MM-dd')}" /></td>
+    <tr th:if="${visit.id != null}" th:each="visit : ${pet.visits}">
+      <td th:text="${visit.date}" /></td>
       <td th:text=" ${visit.description}" /></td>
     </tr>
   </table>

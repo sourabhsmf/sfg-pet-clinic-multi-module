@@ -14,9 +14,11 @@ import guru.springframework.sfgpetclinic.exceptions.OwnerPetRelationException;
 import guru.springframework.sfgpetclinic.exceptions.PetNotFoundException;
 import guru.springframework.sfgpetclinic.model.Owner;
 import guru.springframework.sfgpetclinic.model.Pet;
+import guru.springframework.sfgpetclinic.model.Visit;
 import guru.springframework.sfgpetclinic.services.OwnerService;
 import guru.springframework.sfgpetclinic.services.PetService;
 import guru.springframework.sfgpetclinic.services.PetTypeService;
+import guru.springframework.sfgpetclinic.services.VisitService;
 
 
 @RequestMapping({ "/owners/{ownerId}/pets", "/owners/{ownerId}/pets.html" })
@@ -25,11 +27,15 @@ public class PetController{
     private final PetService petService;
     private final OwnerService ownerService;
     private final PetTypeService petTypeService;
+    
+    private final VisitService visitService;
 
-    public PetController(PetService petService, OwnerService ownerService, PetTypeService petTypeService){
+    public PetController(PetService petService, OwnerService ownerService, 
+                        PetTypeService petTypeService, VisitService visitService){
         this.petService = petService;
         this.ownerService = ownerService;
         this.petTypeService = petTypeService;
+        this.visitService = visitService;
    }
    @ModelAttribute
    public void init(@PathVariable Long ownerId, @PathVariable(required = false) Long petId, 
@@ -122,5 +128,39 @@ public class PetController{
         
         return "redirect:/owners/" + owner.getId() + "/pets";
         
+    }
+
+    //CREATE NEW VISIT
+    @GetMapping({"/{petId}/visits/new"})
+    public String createVisitForm(Model model){
+
+        model.addAttribute("visit", Visit.builder().build());
+        
+        return "pets/createOrUpdateVisitForm";
+    
+    }
+    @PostMapping({"/{petId}/visits/add", "/{petId}/visits/create", "/{petId}/visits/new"})
+    public String createVisit(Model model, Visit visit, BindingResult bindingResult){
+        Pet pet = (Pet)model.asMap().get("pet");
+        if(!bindingResult.hasErrors()){
+            visit.setPet(pet);
+            visitService.save(visit);
+            return "redirect:/owners/" + pet.getOwner().getId() 
+                    + "/pets/" + pet.getId() + "/visits/";
+        }
+        
+        model.addAttribute("visit", visit);
+        
+        return "redirect:";
+    }
+    //READ
+    @GetMapping({"/{petId}/visits"})
+    public String getVisits(@PathVariable Long petId, Model model) {
+        Pet pet = petService.findById(petId);
+        if(pet != null){
+            model.addAttribute("visits", pet.getVisits());
+            return "visits/visitList";
+        }
+        throw new PetNotFoundException(petId);
     }
 }

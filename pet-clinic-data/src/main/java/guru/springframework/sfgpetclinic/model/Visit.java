@@ -26,6 +26,10 @@ public class Visit extends BaseEntity {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
+    @ManyToOne
+    @JoinColumn(name = "vet_id")
+    private Vet vet;
+
     @Builder
     public Visit(Long Id, Date date, String description, Pet pet) {
         super(Id);

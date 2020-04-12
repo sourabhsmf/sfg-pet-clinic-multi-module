@@ -4,12 +4,14 @@ import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.*;
@@ -40,6 +42,9 @@ public class Vet extends Person {
     
     @Column(name = "city")
     private String city;
+
+    @OneToMany(cascade = CascadeType.ALL , mappedBy = "vet")
+    private Set<Visit> visits = new HashSet<>();
 
     @Builder
     public Vet(Long Id, String firstName, String lastName, Date yearsOfPractice, Set<Speciality> specialities,

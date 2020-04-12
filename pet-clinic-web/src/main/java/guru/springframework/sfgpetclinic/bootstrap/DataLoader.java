@@ -77,7 +77,7 @@ public class DataLoader implements CommandLineRunner{
         warlockPetVisit.setDescription("Violations");
         warlockPetVisit.setPet(owner1.getPets().iterator().next());
         
-        visitService.save(warlockPetVisit);
+        warlockPetVisit = visitService.save(warlockPetVisit);
         warlockPet.getVisits().add(warlockPetVisit);
 
         Owner owner2 = new Owner();
@@ -107,7 +107,7 @@ public class DataLoader implements CommandLineRunner{
         elfPetVisit.setDescription("Violations");
         elfPetVisit.setPet(owner2.getPets().iterator().next());
 
-        visitService.save(elfPetVisit);
+        elfPetVisit = visitService.save(elfPetVisit);
         elfPet.getVisits().add(elfPetVisit);
 
         System.out.println("Owners have been loaded succcessfully");
@@ -127,7 +127,7 @@ public class DataLoader implements CommandLineRunner{
         enchantedSpeciality = specialityService.save(enchantedSpeciality);
 
         vet1.getSpecialities().add(elixirSpeciality);
-        vetService.save(vet1);
+        vet1 = vetService.save(vet1);
 
         Vet vet2 = new Vet();
         vet2.setYearsOfPractice(new Date(20L));
@@ -135,8 +135,13 @@ public class DataLoader implements CommandLineRunner{
         vet2.setLastName("Old");
         
         vet2.getSpecialities().add(enchantedSpeciality);
-        vetService.save(vet2);
+        vet2 = vetService.save(vet2);
 
+        elfPetVisit.setVet(vet2);
+        visitService.save(elfPetVisit);
+        warlockPetVisit.setVet(vet1);
+        visitService.save(warlockPetVisit);
+        
         System.out.println("Vets have been loaded succcessfully");
         
     }

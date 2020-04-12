@@ -23,7 +23,7 @@ public class OwnerController{
     /**
      *
      */
-    private static final String OWNERS_CREATE_OR_UPDATE_OWNER_FORM = "/owners/createOrUpdateOwnerForm";
+    private static final String OWNERS_CREATE_OR_UPDATE_OWNER_FORM = "owners/createOrUpdateOwnerForm";
     private final OwnerService ownerService;
 
     public OwnerController(OwnerService ownerService){

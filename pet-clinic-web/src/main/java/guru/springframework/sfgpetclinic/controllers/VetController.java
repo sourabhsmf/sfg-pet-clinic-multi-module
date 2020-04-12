@@ -18,7 +18,7 @@ import guru.springframework.sfgpetclinic.services.VetService;
 public class VetController{
     private final VetService vetService;
     private final SpecialityService specialityService;
-    private static final String VETS_CREATE_OR_UPDATE_VET_FORM = "/vets/createOrUpdateVetForm";
+    private static final String VETS_CREATE_OR_UPDATE_VET_FORM = "vets/createOrUpdateVetForm";
 
     public VetController(VetService vetService, SpecialityService specialityService){
         this.vetService = vetService;

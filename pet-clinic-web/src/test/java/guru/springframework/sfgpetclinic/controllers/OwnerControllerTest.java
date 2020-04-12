@@ -116,7 +116,7 @@ class OwnerControllerTest {
         //When  
         mockMvc.perform(get("/owners/create"))
                 .andExpect(status().isOk())//Then
-                .andExpect(view().name("/owners/createOrUpdateOwnerForm"))
+                .andExpect(view().name("owners/createOrUpdateOwnerForm"))
                 .andExpect(model().attributeExists("owner"));
         
         verifyZeroInteractions(ownerService);
@@ -175,7 +175,7 @@ class OwnerControllerTest {
         //When
         mockMvc.perform(get("/owners/" + ownerToUpdate.getId() + "/edit"))
                     .andExpect(status().isOk()) //Then
-                    .andExpect(view().name("/owners/createOrUpdateOwnerForm"))
+                    .andExpect(view().name("owners/createOrUpdateOwnerForm"))
                     .andExpect(model().attributeExists("owner"));
         
         verify(ownerService).findById(ownerToUpdate.getId());
@@ -247,7 +247,7 @@ class OwnerControllerTest {
                                             + "&city=SOLAR")
                         .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
                 .andExpect(status().isOk()) //Then
-                .andExpect(view().name("/owners/createOrUpdateOwnerForm"))
+                .andExpect(view().name("owners/createOrUpdateOwnerForm"))
                 .andExpect(model().attributeExists("owner"));
 
         verify(ownerService).findById(anyLong());

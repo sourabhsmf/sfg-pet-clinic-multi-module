@@ -1,7 +1,8 @@
 package guru.springframework.sfgpetclinic.bootstrap;
 
 import java.sql.Date;
-
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,9 @@ public class DataLoader implements CommandLineRunner{
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
     private final VisitService visitService;
+
+    private static final Logger logger = LogManager.getLogger(DataLoader.class);
+
     public DataLoader(OwnerService ownerService,VetService vetService,
                     PetTypeService petTypeService, SpecialityService specialityService,
                     VisitService visitService){
@@ -33,7 +37,6 @@ public class DataLoader implements CommandLineRunner{
         this.specialityService = specialityService;
         this.visitService = visitService;
     }
-
     @Override
     public void run(String... args) throws Exception{
         if(petTypeService.findAll().size() == 0) { loadData(); }
@@ -110,8 +113,7 @@ public class DataLoader implements CommandLineRunner{
         elfPetVisit = visitService.save(elfPetVisit);
         elfPet.getVisits().add(elfPetVisit);
 
-        System.out.println("Owners have been loaded succcessfully");
-
+        logger.debug("Owners have been loaded succcessfully");
         Vet vet1 = new Vet();
         vet1.setYearsOfPractice(new Date(10L));
         vet1.setFirstName("Wizard");
@@ -142,7 +144,7 @@ public class DataLoader implements CommandLineRunner{
         warlockPetVisit.setVet(vet1);
         visitService.save(warlockPetVisit);
         
-        System.out.println("Vets have been loaded succcessfully");
+        logger.debug("Vets have been loaded succcessfully");
         
     }
 

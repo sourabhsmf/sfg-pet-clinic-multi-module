@@ -23,6 +23,6 @@ jobs:
     - name: Install required dependencies
       run: mvn install -DskipTests 
     - name: Run tests
-      run: mvn test
+      run: mvn verify
     - name: Build with Maven
       run: mvn -B package --file pom.xml

@@ -13,7 +13,7 @@ Package -
 Run - 
   `java -jar pet-clinic-web/target/pet-clinic-web-0.0.1-SNAPSHOT.jar`
 
-Run in docker container - 
+Docker- 
   - build image using - 
       `docker build -t sfg-pet-clinic-app .` 
   - docker run -

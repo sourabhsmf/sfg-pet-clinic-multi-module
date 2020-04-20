@@ -1,6 +1,5 @@
-FROM openjdk:8-jdk-alpine
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
-ARG JAR_FILE=pet-clinic-web/target/*.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM maven:3.6.3-jdk-8
+COPY . /app
+WORKDIR /app
+RUN mvn clean package;
+ENTRYPOINT ["java","-jar","pet-clinic-web/target/pet-clinic-web-0.0.1-SNAPSHOT.jar"]

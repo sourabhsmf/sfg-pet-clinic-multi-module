@@ -118,6 +118,9 @@ public class DataLoader implements CommandLineRunner{
         vet1.setYearsOfPractice(new Date(10L));
         vet1.setFirstName("Wizard");
         vet1.setLastName("White");
+        vet1.setAddress("VetStreet");
+        vet1.setCity("Vet City");
+        vet1.setTelephone("1112223331");
 
         //speciality object
         Speciality elixirSpeciality = new Speciality();
@@ -135,7 +138,10 @@ public class DataLoader implements CommandLineRunner{
         vet2.setYearsOfPractice(new Date(20L));
         vet2.setFirstName("Ogre");
         vet2.setLastName("Old");
-        
+        vet2.setAddress("UberVets");
+        vet2.setCity("Vet City");
+        vet2.setTelephone("2233112211");
+
         vet2.getSpecialities().add(enchantedSpeciality);
         vet2 = vetService.save(vet2);
 

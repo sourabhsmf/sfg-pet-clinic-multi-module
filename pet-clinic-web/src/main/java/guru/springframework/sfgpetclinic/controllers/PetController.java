@@ -1,9 +1,17 @@
 package guru.springframework.sfgpetclinic.controllers;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,6 +45,19 @@ public class PetController{
         this.petTypeService = petTypeService;
         this.visitService = visitService;
    }
+
+   @InitBinder(value = {"visit", "pet"})
+    public void customizeBinding (WebDataBinder binder) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormatter.setLenient(false);
+        //visit
+        binder.registerCustomEditor(Date.class, "date",
+                                    new CustomDateEditor(dateFormatter, true));
+        //pet
+        binder.registerCustomEditor(Date.class, "dob",
+                                    new CustomDateEditor(dateFormatter, true));                                 
+    }
+
    @ModelAttribute
    public void init(@PathVariable Long ownerId, @PathVariable(required = false) Long petId, 
                             Model model){
@@ -79,9 +100,8 @@ public class PetController{
     
     }
     @PostMapping({"/add", "/create", "/new"})
-    public String createPet(Model model, Pet pet, BindingResult bindingResult){
+    public String createPet(Model model, @Valid Pet pet, BindingResult bindingResult){
         Owner owner = (Owner)model.asMap().get("owner");
-    
         if(!bindingResult.hasErrors()){
             pet.setOwner(owner);
             Pet petSaved = petService.save(pet);
@@ -89,8 +109,9 @@ public class PetController{
         }
         
         model.addAttribute("pet", pet);
-        
-        return "redirect:";
+        model.addAttribute("types", petTypeService.findAll());
+
+        return "pets/createOrUpdatePetForm";
     }
     //READ
     @GetMapping({"/{petId}"})
@@ -105,7 +126,8 @@ public class PetController{
         return "pets/createOrUpdatePetForm";
     }
     @PostMapping({"/{petId}/edit"})
-    public String updatePet(@PathVariable Long petId, Pet updatedPet, Model model, BindingResult result){
+    public String updatePet(@PathVariable Long petId, @Valid Pet updatedPet, Model model, 
+                            BindingResult result){
         Owner owner = (Owner)model.asMap().get("owner");
         
         if(!result.hasErrors()){
@@ -116,7 +138,7 @@ public class PetController{
 
         model.addAttribute("pet", updatedPet);
         
-        return "redirect:"+ petId +"edit/";
+        return "pets/createOrUpdatePetForm";
     }
     //DELETE
     @GetMapping({"/{petId}/delete"})
@@ -140,7 +162,7 @@ public class PetController{
     
     }
     @PostMapping({"/{petId}/visits/add", "/{petId}/visits/create", "/{petId}/visits/new"})
-    public String createVisit(Model model, Visit visit, BindingResult bindingResult){
+    public String createVisit(Model model, @Valid Visit visit, BindingResult bindingResult){
         Pet pet = (Pet)model.asMap().get("pet");
         if(!bindingResult.hasErrors()){
             visit.setPet(pet);
@@ -151,7 +173,7 @@ public class PetController{
         
         model.addAttribute("visit", visit);
         
-        return "redirect:";
+        return "pets/createOrUpdateVisitForm";
     }
     //READ
     @GetMapping({"/{petId}/visits"})

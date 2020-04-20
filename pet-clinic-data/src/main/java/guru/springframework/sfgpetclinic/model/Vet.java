@@ -13,7 +13,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
+
+import guru.springframework.sfgpetclinic.validators.AddressConstraint;
 import lombok.*;
 
 /**
@@ -27,6 +33,7 @@ import lombok.*;
 public class Vet extends Person {
 
     @Column(name = "years_of_practice")
+    @NotNull(message = "Years of Practice cannot be blank")
     private Date yearsOfPractice;
     
     @ManyToMany(fetch = FetchType.EAGER)
@@ -35,12 +42,18 @@ public class Vet extends Person {
     private Set<Speciality> specialities = new HashSet<>();
     
     @Column(name = "address")
+    @AddressConstraint
+    @NotBlank(message = "Address can not be blank")
     private String address;
 
     @Column(name = "telephone")
+    @NotBlank(message = "Telephone cannot be blank")
+    @Length(min = 10, max = 10, message = "Length should be 10 digits")
     private String telephone;
     
-    @Column(name = "city")
+    @Column(name = "city")    
+    @NotBlank(message = "City cannot be blank")
+    @Pattern(regexp = "([A-Z a-z])+", message = "City must contain letters only")
     private String city;
 
     @OneToMany(cascade = CascadeType.ALL , mappedBy = "vet")

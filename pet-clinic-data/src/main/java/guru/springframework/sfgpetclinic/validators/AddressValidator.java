@@ -12,7 +12,7 @@ public class AddressValidator implements ConstraintValidator<AddressConstraint, 
     }
     @Override
     public boolean isValid(String address, ConstraintValidatorContext constraintValidatorContext) {
-        String whitelistedCharacters = ",-./\\\n\t";
+        String whitelistedCharacters = " ,-./\\\n\t";
 
         for(Character letter : address.toCharArray()){
             if(!Character.isAlphabetic((int)letter) && !Character.isDigit((int)letter)

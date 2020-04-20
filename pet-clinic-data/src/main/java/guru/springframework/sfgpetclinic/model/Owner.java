@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import guru.springframework.sfgpetclinic.validators.AddressConstraint;
 import lombok.*;
@@ -29,7 +30,7 @@ import org.hibernate.validator.constraints.Length;
 
     @Column(name = "address")
     @AddressConstraint
-    @NotBlank
+    @NotBlank(message = "Address cannot be blank")
     private String address;
     
     @Column(name = "telephone")
@@ -39,6 +40,7 @@ import org.hibernate.validator.constraints.Length;
     
     @Column(name = "city")
     @NotBlank(message = "City cannot be blank")
+    @Pattern(regexp = "([A-Z a-z])+", message = "City must contain letters only")
     private String city;
     
     @Column(name = "age")

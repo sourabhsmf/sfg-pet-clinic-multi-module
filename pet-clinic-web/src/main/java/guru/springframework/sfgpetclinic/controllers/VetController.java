@@ -1,9 +1,17 @@
 package guru.springframework.sfgpetclinic.controllers;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +32,15 @@ public class VetController{
         this.vetService = vetService;
         this.specialityService = specialityService;
     }
+    
+    @InitBinder(value = {"vet"})
+    public void customizeBinding (WebDataBinder binder) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormatter.setLenient(false);
+        //vet
+        binder.registerCustomEditor(Date.class, "yearsOfPractice",
+                                    new CustomDateEditor(dateFormatter, true));
+    }
     @RequestMapping({"", "/index.html", "/index"})
     public String index(Model model){
         model.addAttribute("vets", vetService.findAll());
@@ -37,8 +54,9 @@ public class VetController{
         return VETS_CREATE_OR_UPDATE_VET_FORM;
     }
     @PostMapping({"/create", "/add", "/new"})
-    public String createVet(Vet vet, BindingResult result){
+    public String createVet(@Valid Vet vet, BindingResult result, Model model){
         if(result.hasErrors()){
+            model.addAttribute("specialities", specialityService.findAll());
             return VETS_CREATE_OR_UPDATE_VET_FORM;
         }
         Vet savedVet = vetService.save(vet);
@@ -68,10 +86,11 @@ public class VetController{
     }
 
     @PostMapping({"/{vetId}/edit"})
-    public String updateVet(@PathVariable Long vetId, Vet vet,
+    public String updateVet(@PathVariable Long vetId, @Valid Vet vet,
                                 BindingResult result, Model model){
         if(result.hasErrors() || vetService.findById(vetId) == null){
             model.addAttribute("vet", vet);
+            model.addAttribute("specialities", specialityService.findAll());
             return VETS_CREATE_OR_UPDATE_VET_FORM;
         }else{
             vet.setId(vetId);

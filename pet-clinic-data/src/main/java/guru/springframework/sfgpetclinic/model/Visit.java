@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import lombok.*;
 
@@ -17,9 +20,12 @@ import lombok.*;
 @Table(name = "visits")
 public class Visit extends BaseEntity {
     @Column(name = "date")
+    @NotNull(message = "Date of Visit cannot be blank")
     private Date date;
 
     @Column(name = "description")
+    @NotBlank(message = "Pet name cannot be blank")
+    @Pattern(regexp = "([A-Z a-z])+", message = "Visit description must contain letters only")
     private String description;
 
     @ManyToOne

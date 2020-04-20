@@ -37,7 +37,7 @@ class OwnerControllerTest {
     /**
      *
      */
-    private static final String LAST_NAME = "LAST_NAME";
+    private static final String LAST_NAME = "Sinha";
 
     @Mock
     OwnerService ownerService;

@@ -15,6 +15,6 @@ Run -
 
 Run in docker container - 
   - build image using - 
-      `docker build -t sfg-pet-clinic-app` 
+      `docker build -t sfg-pet-clinic-app .` 
   - docker run -
       `docker run -p 8080:8080 -d --name petclinicapp sfg-pet-clinic-app`

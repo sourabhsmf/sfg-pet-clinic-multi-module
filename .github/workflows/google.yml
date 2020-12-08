@@ -67,7 +67,7 @@ jobs:
         docker push "gcr.io/$PROJECT_ID/$IMAGE:$GITHUB_SHA"
     
     # Identify branch and setup files to deploy
-    - name: Echo path variable
+    - name: Check for green branch and set RELEASE env variable
       if: ${{contains(github.ref, 'green')}}
       env: 
         RELEASE: green

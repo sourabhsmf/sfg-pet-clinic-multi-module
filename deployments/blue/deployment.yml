@@ -1,21 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gke-pet-clinic-pod
+  name: gke-pet-clinic-pod-blue
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: gke-pet-clinic-pod
+      app: gke-pet-clinic-pod-v2
+      track: blue
   strategy:
     rollingUpdate:
       maxSurge: 1
       maxUnavailable: 1
-  minReadySeconds: 5
+  minReadySeconds: 10
   template:
     metadata:
       labels:
-        app: gke-pet-clinic-pod
+        app: gke-pet-clinic-pod-v2
         track: blue
     spec:
       containers:

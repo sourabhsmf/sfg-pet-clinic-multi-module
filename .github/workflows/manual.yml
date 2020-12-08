@@ -31,3 +31,8 @@ jobs:
       # Runs a single command using the runners shell
     - name: Echo branch name
       run: echo "Hello ${GITHUB_REF}"
+    - name: Echo path variable
+      if: ${{contains(github.ref, 'blue')}}
+      env: 
+        RELEASE: "green"
+      run: echo "${RELEASE} is the path"

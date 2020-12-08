@@ -35,9 +35,7 @@ jobs:
       run: echo "Hello ${GITHUB_REF}"
     - name: Echo path variable
       if: ${{contains(github.ref, 'blue')}}
-      env: 
-        RELEASE: "green"
-      run: echo "${RELEASE} is the path"
+      run: echo "RELEASE=green" >> $GITHUB_ENV   
     - name: Echo release name
       run: echo "Hello ${RELEASE}"
     

@@ -70,9 +70,9 @@ jobs:
     # Identify branch and setup files to deploy
     - name: Check for green branch and set RELEASE env variable
       if: ${{contains(github.ref, 'green')}}
-      env: 
-        RELEASE: green
-      run: echo "${RELEASE} release will be deployed"
+      run: |-
+        echo "RELEASE=green" >> $GITHUB_ENV
+        echo "${RELEASE} release will be deployed"
       
     # Set up kustomize
     - name: Set up Kustomize

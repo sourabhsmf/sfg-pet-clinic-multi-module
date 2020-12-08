@@ -32,7 +32,7 @@ jobs:
     - name: Echo branch name
       run: echo "Hello ${GITHUB_REF}"
     - name: Echo path variable
-      if: ${{contains(github.ref, "blue")}}
+      if: ${{contains(github.ref, 'blue')}}
       env: 
         RELEASE: "green"
       run: echo "${RELEASE} is the path"

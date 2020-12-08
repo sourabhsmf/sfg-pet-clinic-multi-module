@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: gke-pet-clinic-pod-green
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: gke-pet-clinic-pod-v1

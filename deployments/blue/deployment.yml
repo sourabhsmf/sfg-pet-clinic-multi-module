@@ -24,6 +24,24 @@ spec:
         image: gcr.io/PROJECT_ID/IMAGE:TAG
         ports:
         - containerPort: 8080
+        readinessProbe:
+          httpGet:
+             path: /actuator/health
+             port: http
+          failureThreshold: 6
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          failureThreshold: 6
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          successThreshold: 1
+          timeoutSeconds: 1
         resources:
           requests:
             cpu: 100m

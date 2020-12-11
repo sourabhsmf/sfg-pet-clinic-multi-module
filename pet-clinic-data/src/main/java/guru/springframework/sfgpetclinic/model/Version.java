@@ -13,6 +13,8 @@ import lombok.Setter;
 @Builder
 public class Version{
     
-    private String token;
+    private String version;
+
+    private String release;
 
 }

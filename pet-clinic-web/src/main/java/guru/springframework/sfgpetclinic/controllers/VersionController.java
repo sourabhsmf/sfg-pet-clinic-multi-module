@@ -13,8 +13,11 @@ public class VersionController {
         
         String versionString = System.getenv("APP_VERSION");
         versionString = versionString == null ? "0.0.1" : versionString;  
-        
-        return Version.builder().token(versionString).build();
+
+        String releaseString = System.getenv("POD_RELEASE");
+        releaseString = releaseString == null ? "blue" : releaseString;  
+                
+        return Version.builder().version(versionString).release(releaseString).build();
         
     }
 }
